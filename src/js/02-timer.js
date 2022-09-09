@@ -7,12 +7,12 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  // выбираем будующую дату
   onClose(selectedDates) {
     if (Date.now() > selectedDates[0]) {
-      Notiflix.Notify.failure('Дату нужно выбрать в будущем!');
+      Notiflix.Notify.failure('Please choose a date in the future');
       return;
     }
-    console.log(selectedDates[0]);
     finnalyDate = selectedDates[0];
     startEl.disabled = false;
   },
@@ -28,18 +28,18 @@ const secondsEl = document.querySelector('[data-seconds]');
 flatpickr(dateTimePicker, options);
 
 let finnalyDate;
+console.log(finnalyDate);
 let timerId = null;
-
 startEl.disabled = true;
 
-startEl.addEventListener('click', () => {
-  startTime();
-  startEl.disabled = true;
-});
+startEl.addEventListener('click', startTime);
 
+// запускаем таймер на обратный отсчёт
 function startTime() {
+  startEl.disabled = true;
   Notiflix.Notify.success('Обратный отсчёт запущен!');
   timerId = setInterval(() => {
+    // класс времени
     let timeD = finnalyDate - Date.now();
     const { days, hours, minutes, seconds } = convertMs(timeD);
     daysEl.textContent = addLeadingZero(days);
@@ -47,13 +47,15 @@ function startTime() {
     minutesEl.textContent = addLeadingZero(minutes);
     secondsEl.textContent = addLeadingZero(seconds);
 
+    // конец счёта
     if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
       clearInterval(timerId);
-      Notiflix.Notify.info('Отсчёт закончился!');
+      Notiflix.Notify.warning('Отсчёт закончился!');
       timerId = null;
     }
   }, 1000);
 }
+
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }

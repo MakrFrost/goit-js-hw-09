@@ -2,6 +2,7 @@ const startBtn = document.querySelector('button[data-start]');
 const stopBtn = document.querySelector('button[data-stop]');
 const body = document.getElementsByTagName('body')[0];
 let timerId = null;
+import Notiflix from 'notiflix';
 
 startBtn.addEventListener('click', bodyColorOn);
 stopBtn.addEventListener('click', bodyColorOff);
@@ -13,6 +14,8 @@ function bodyColorOn() {
 
 function getBodyColor() {
   body.style.cssText = `background-color:${getRandomHexColor()}`;
+  console.log((Notiflix.Notify.success.background = `${getRandomHexColor()}`));
+  Notiflix.Notify.success(`Цвет изменён на ${getRandomHexColor()}`);
 }
 
 function bodyColorOff() {
