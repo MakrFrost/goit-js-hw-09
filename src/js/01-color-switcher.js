@@ -14,7 +14,7 @@ function bodyColorOn() {
 
 function getBodyColor() {
   body.style.cssText = `background-color:${getRandomHexColor()}`;
-  console.log((Notiflix.Notify.success.background = `${getRandomHexColor()}`));
+  Notiflix.Notify.success.background = `${getRandomHexColor()}`;
   Notiflix.Notify.success(`Цвет изменён на ${getRandomHexColor()}`);
 }
 
